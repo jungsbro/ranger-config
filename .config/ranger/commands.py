@@ -62,7 +62,7 @@ class my_edit(Command):
         return self._tab_directory_content()
 
 
-############################### fzf ###############################
+# fzf in ranger ================================================================
 # https://github.com/ranger/ranger/wiki/Integrating-File-Search-with-fzf
 # Now, simply bind this function to a key, by adding this to your ~/.config/ranger/rc.conf: map <C-f> fzf_select
 class fzf_select(Command):
@@ -93,7 +93,8 @@ class fzf_select(Command):
                 self.fm.cd(fzf_file)
             else:
                 self.fm.select_file(fzf_file)
-# fzf_locate
+# ------------------------------------------------------------------------------
+
 class fzf_locate(Command):
     """
     :fzf_locate
@@ -118,10 +119,11 @@ class fzf_locate(Command):
                 self.fm.cd(fzf_file)
             else:
                 self.fm.select_file(fzf_file)
+# ------------------------------------------------------------------------------
+# ==============================================================================
 
-
-############################### fasd ###############################
-# fzf_fasd - Fasd + Fzf + Ranger (Interactive Style)
+# fzf and fasd in ranger =======================================================
+# fzf_fasd - Fasd + Fzf + Ranger (Interactive Style) ---------------------------
 class fzf_fasd(Command):
     """
     :fzf_fasd
@@ -145,8 +147,9 @@ class fzf_fasd(Command):
                 self.fm.cd(fzf_file)
             else:
                 self.fm.select_file(fzf_file)
+# ------------------------------------------------------------------------------
 
-# Fasd with ranger (Command Line Style)
+# Fasd with ranger (Command Line Style) ----------------------------------------
 # https://github.com/ranger/ranger/wiki/Commands
 class fasd(Command):
     """
@@ -161,4 +164,5 @@ class fasd(Command):
         if arg:
             directory = subprocess.check_output(["fasd", "-d"]+arg.split(), universal_newlines=True).strip()
             self.fm.cd(directory)
-
+# ------------------------------------------------------------------------------
+# ==============================================================================
