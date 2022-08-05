@@ -293,6 +293,11 @@ sudo vi /etc/updatedb.conf;
 ```
 `# PRUNEPATHS에서 /media 삭제 후`
 ```bash
+# PRUNEPATHS="/tmp /var/spool /media /var/lib/os-prober /var/lib/ceph"
+PRUNEPATHS="/tmp /var/spool /var/lib/os-prober /var/lib/ceph"
+```
+`# updatedb 실행`
+```bash
 sudo updatedb;
 ```
 <br><br>
