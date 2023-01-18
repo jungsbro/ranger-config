@@ -99,6 +99,13 @@ sudo updatedb;
 ```
 <br>
 
+5. Arcives (compress / extract)
+```bash
+mkdir -p ~/.config/ranger/plugins;
+git clone https://github.com/maximtrp/ranger-archives.git ~/.config/ranger/plugins/ranger-archives;
+```
+<br>
+
 ---
 <br><br>
 
@@ -387,5 +394,28 @@ map zo   console fasd%space
 <br><br>
 
 
+> Archives ( compress / exatract ) in ranger
+
+[ranger-archives](https://github.com/maximtrp/ranger-archives)
+
+1. ranger-archives 설치
+```bash
+mkdir -p ~/.config/ranger/plugins;
+git clone https://github.com/maximtrp/ranger-archives.git ~/.config/ranger/plugins/ranger-archives;
+```
+
+2. 사용법
+
+`# compress`
+```
+:compress test.zip
+```
+`# extract`
+```
+:extract testDir
+```
+```
+:extract
+```
 ---
 <br><br>
