@@ -77,22 +77,31 @@ class fzf_select(Command):
     """
     def execute(self):
         import subprocess
+        import os
+
+        exclude_part = r"\( -path '*/.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune"
+
         if self.quantifier:
             # match only directories
-            command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
-            -o -type d -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
+            # command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
+            # -o -type d -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
+            command = f"find -L . {exclude_part} -o -type d -print 2> /dev/null | fzf +m"
         else:
             # match files and directories
-            command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
-            -o -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
+            # command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
+            # -o -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
+            command = f"find -L . {exclude_part} -o -print 2> /dev/null | fzf +m"
+
         fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
+
         if fzf.returncode == 0:
             fzf_file = os.path.abspath(stdout.decode('utf-8').rstrip('\n'))
-            if os.path.isdir(fzf_file):
-                self.fm.cd(fzf_file)
-            else:
-                self.fm.select_file(fzf_file)
+            if os.path.exists(fzf_file):
+                if os.path.isdir(fzf_file):
+                    self.fm.cd(fzf_file)
+                else:
+                    self.fm.select_file(fzf_file)
 # ------------------------------------------------------------------------------
 
 class fzf_locate(Command):
